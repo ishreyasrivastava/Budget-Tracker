@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+/* Custom theme for dark mode budget tracker */
+@theme {
+  --color-primary-50: #eef2ff;
+  --color-primary-100: #e0e7ff;
+  --color-primary-200: #c7d2fe;
+  --color-primary-300: #a5b4fc;
+  --color-primary-400: #818cf8;
+  --color-primary-500: #6366f1;
+  --color-primary-600: #4f46e5;
+  --color-primary-700: #4338ca;
+  --color-primary-800: #3730a3;
+  --color-primary-900: #312e81;
+  
+  --color-dark-50: #f8fafc;
+  --color-dark-100: #f1f5f9;
+  --color-dark-200: #e2e8f0;
+  --color-dark-300: #cbd5e1;
+  --color-dark-400: #94a3b8;
+  --color-dark-500: #64748b;
+  --color-dark-600: #475569;
+  --color-dark-700: #334155;
+  --color-dark-800: #1e293b;
+  --color-dark-900: #0f172a;
+  --color-dark-950: #020617;
+  
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+}
+
+/* Base styles */
+body {
+  @apply bg-dark-950 text-dark-100 antialiased;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Custom scrollbar for dark mode */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-dark-900;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-dark-700 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-dark-600;
+}
+
+/* Card glass effect */
+.glass-card {
+  @apply bg-dark-900/50 backdrop-blur-xl border border-dark-800/50 rounded-2xl;
+}
+
+/* Gradient text */
+.gradient-text {
+  @apply bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-transparent;
+}
+
+/* Button base */
+.btn-primary {
+  @apply bg-primary-600 hover:bg-primary-700 text-white font-medium px-4 py-2 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.btn-secondary {
+  @apply bg-dark-800 hover:bg-dark-700 text-dark-100 font-medium px-4 py-2 rounded-lg border border-dark-700 transition-all duration-200;
+}
+
+/* Input styles */
+.input-field {
+  @apply w-full bg-dark-800/50 border border-dark-700 rounded-lg px-4 py-3 text-dark-100 placeholder-dark-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 transition-all duration-200;
+}
+
+/* Status badges */
+.badge-ok {
+  @apply bg-success/20 text-success px-2 py-1 rounded-full text-xs font-medium;
+}
+
+.badge-warning {
+  @apply bg-warning/20 text-warning px-2 py-1 rounded-full text-xs font-medium;
+}
+
+.badge-exceeded {
+  @apply bg-danger/20 text-danger px-2 py-1 rounded-full text-xs font-medium;
+}
