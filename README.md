@@ -1,190 +1,175 @@
-# 💰 BudgetPro - Personal Budget Tracker
+# 💰 Budget Tracker — AI-Powered Personal Finance Manager
 
-A full-stack personal finance management application built with React, FastAPI, and Supabase.
+![Backend CI](https://github.com/ishreyasrivastava/Budget-Tracker/actions/workflows/backend-ci.yml/badge.svg)
 
-![Budget Tracker](https://img.shields.io/badge/Status-Production-green) ![React](https://img.shields.io/badge/React-18-blue) ![FastAPI](https://img.shields.io/badge/FastAPI-0.109-green) ![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-purple)
+A full-stack personal finance management app with **AI-powered expense prediction**, **anomaly detection**, and **smart spending insights**. Built with React + FastAPI + Supabase.
 
 ## ✨ Features
 
-- 🔐 **Secure Authentication** - Email/password auth with Supabase
-- 📊 **Dashboard Analytics** - Visual spending breakdown with charts
-- 💸 **Expense Tracking** - Add, edit, delete expenses by category
-- 🎯 **Budget Management** - Set monthly budgets per category
-- 🚨 **Smart Alerts** - Warnings when approaching/exceeding budgets
-- 📱 **Responsive Design** - Works on desktop and mobile
-- 🌙 **Dark Mode** - Premium dark theme UI
+### Core
+- 📊 **Expense Tracking** — Full CRUD with category-based organization
+- 💰 **Budget Management** — Set monthly budgets per category with real-time tracking
+- 📈 **Dashboard** — Visual spending breakdown, trends, and budget alerts
+- 🔐 **Authentication** — Secure JWT-based auth via Supabase
 
-## 🏗️ Tech Stack
+### 🤖 AI-Powered Analytics
+- 🔮 **Expense Prediction** — Forecasts next month's spending using Weighted Moving Average + Linear Trend analysis
+- 🚨 **Anomaly Detection** — Flags unusual expenses using Z-score and IQR statistical methods
+- 💡 **Smart Insights** — Category dominance warnings, budget utilization alerts, spending pattern analysis
 
-### Frontend
-- React 18 with Vite
-- Tailwind CSS v4
-- React Router v6
-- Recharts for data visualization
-- Lucide React icons
+## 🛠️ Tech Stack
 
-### Backend
-- FastAPI (Python)
-- Supabase Client
-- Pydantic for validation
-- JWT Authentication
-
-### Database
-- Supabase (PostgreSQL)
-- Row Level Security enabled
-- Real-time capable
-
-## 🚀 Quick Start
-
-### Prerequisites
-- Node.js 18+
-- Python 3.11+
-- Supabase account
-
-### 1. Set up Supabase
-
-1. Create a new project at [supabase.com](https://supabase.com)
-2. Go to SQL Editor and run the schema from `database/schema.sql`
-3. Copy your project URL and anon key from Settings > API
-
-### 2. Backend Setup
-
-```bash
-cd backend
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Configure environment
-cp .env.example .env
-# Edit .env with your Supabase credentials
-
-# Run development server
-uvicorn app.main:app --reload --port 8000
-```
-
-### 3. Frontend Setup
-
-```bash
-cd frontend
-
-# Install dependencies
-npm install
-
-# Configure environment
-cp .env.example .env
-# Edit .env with your Supabase and API URLs
-
-# Run development server
-npm run dev
-```
-
-### 4. Access the App
-
-- Frontend: http://localhost:5173
-- Backend API: http://localhost:8000
-- API Docs: http://localhost:8000/docs
+| Layer | Technology |
+|-------|-----------|
+| **Frontend** | React 18, Vite, Tailwind CSS |
+| **Backend** | FastAPI (Python), Pydantic validation |
+| **Database** | PostgreSQL via Supabase |
+| **Auth** | Supabase Auth (JWT) |
+| **AI/ML** | Custom statistical engine (WMA, Linear Regression, Z-score, IQR) |
+| **CI/CD** | GitHub Actions |
+| **Deployment** | Vercel (frontend) + Render (backend) |
 
 ## 📁 Project Structure
 
 ```
-budget-tracker-full/
-├── frontend/               # React + Vite frontend
+Budget-Tracker/
+├── frontend/                  # React SPA
 │   ├── src/
-│   │   ├── components/    # Reusable UI components
-│   │   ├── contexts/      # React contexts (Auth)
-│   │   ├── hooks/         # Custom hooks
-│   │   ├── lib/           # Utilities and API client
-│   │   └── pages/         # Page components
-│   └── ...
-├── backend/               # FastAPI backend
+│   │   ├── components/        # Reusable UI components
+│   │   ├── contexts/          # Auth context provider
+│   │   ├── pages/             # Dashboard, Expenses, Budgets, Login
+│   │   └── lib/               # Supabase client, API helpers, constants
+│   └── package.json
+├── backend/                   # FastAPI server
 │   ├── app/
-│   │   ├── routes/       # API route handlers
-│   │   ├── models.py     # Pydantic models
-│   │   ├── auth.py       # Authentication logic
-│   │   └── main.py       # App entry point
-│   └── ...
-└── database/             # SQL schemas
+│   │   ├── ai/                # AI/ML modules
+│   │   │   ├── predictor.py   # Expense prediction engine
+│   │   │   └── anomaly.py     # Anomaly detection & insights
+│   │   ├── routes/
+│   │   │   ├── auth.py        # Authentication endpoints
+│   │   │   ├── expenses.py    # Expense CRUD
+│   │   │   ├── budgets.py     # Budget management
+│   │   │   ├── dashboard.py   # Analytics dashboard
+│   │   │   └── ai.py          # AI prediction & anomaly routes
+│   │   ├── main.py            # FastAPI app entry point
+│   │   ├── models.py          # Pydantic schemas
+│   │   ├── database.py        # Supabase client
+│   │   ├── auth.py            # JWT auth middleware
+│   │   └── config.py          # Environment configuration
+│   ├── tests/
+│   │   ├── test_predictor.py  # Prediction engine tests
+│   │   └── test_anomaly.py    # Anomaly detection tests
+│   └── requirements.txt
+├── database/
+│   └── schema.sql             # PostgreSQL schema with RLS policies
+└── .github/
+    └── workflows/
+        └── backend-ci.yml     # CI pipeline
 ```
 
-## 🔌 API Endpoints
+## 🤖 AI Engine — How It Works
 
-### Authentication
-- `POST /api/auth/signup` - Register new user
-- `POST /api/auth/login` - Sign in
-- `POST /api/auth/logout` - Sign out
-- `GET /api/auth/me` - Get current user
+### Expense Prediction
+Uses a **hybrid approach** combining:
+1. **Weighted Moving Average (WMA)** — Recent months weighted higher for short-term accuracy
+2. **Linear Trend Analysis** — Detects long-term spending trajectory
 
-### Expenses
-- `GET /api/expenses/` - List expenses (with filters)
-- `POST /api/expenses/` - Create expense
-- `PATCH /api/expenses/{id}` - Update expense
-- `DELETE /api/expenses/{id}` - Delete expense
+Confidence levels based on available data:
+- **High** (6+ months) → Reliable forecasts
+- **Medium** (3-5 months) → Reasonable estimates
+- **Low** (1-2 months) → Rough projections
 
-### Budgets
-- `GET /api/budgets/` - List budgets
-- `POST /api/budgets/` - Create/update budget
-- `PATCH /api/budgets/{id}` - Update budget amount
-- `DELETE /api/budgets/{id}` - Delete budget
+### Anomaly Detection
+Two complementary methods:
+1. **Z-Score** — Flags expenses >2σ from category mean (configurable threshold)
+2. **IQR (Interquartile Range)** — More robust against extreme outliers, uses Q1/Q3 fences
 
-### Dashboard
-- `GET /api/dashboard/` - Get dashboard data
-- `GET /api/dashboard/alerts` - Get budget alerts
+### Smart Insights
+Analyzes patterns to generate actionable recommendations:
+- Category dominance warnings (>40% in one category)
+- Budget utilization alerts (approaching/exceeding limits)
+- Spending frequency analysis
+- Trend-based predictions
 
-## 🚢 Deployment
+## 🚀 Getting Started
 
-### Frontend (Vercel)
+### Prerequisites
+- Python 3.11+
+- Node.js 18+
+- Supabase account
 
+### Backend Setup
+```bash
+cd backend
+pip install -r requirements.txt
+cp .env.example .env
+# Add your Supabase credentials to .env
+uvicorn app.main:app --reload
+```
+
+### Frontend Setup
 ```bash
 cd frontend
-npm run build
-# Deploy dist folder to Vercel
+npm install
+cp .env.example .env
+# Add your Supabase & API credentials to .env
+npm run dev
 ```
 
-### Backend (Render)
+### Database Setup
+Run `database/schema.sql` in your Supabase SQL Editor.
 
-1. Create a new Web Service on Render
-2. Connect your GitHub repo
-3. Set build command: `pip install -r requirements.txt`
-4. Set start command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
-5. Add environment variables from `.env.example`
-
-## 🔒 Environment Variables
-
-### Frontend (.env)
-```
-VITE_SUPABASE_URL=your_supabase_url
-VITE_SUPABASE_ANON_KEY=your_anon_key
-VITE_API_URL=http://localhost:8000
+### Run Tests
+```bash
+cd backend
+pip install pytest
+python -m pytest tests/ -v
 ```
 
-### Backend (.env)
-```
-SUPABASE_URL=your_supabase_url
-SUPABASE_KEY=your_anon_key
-SUPABASE_SERVICE_KEY=your_service_key
-FRONTEND_URL=http://localhost:5173
-```
+## 📡 API Endpoints
 
-## 📝 Categories
+### Auth
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/auth/signup` | Register new user |
+| POST | `/api/auth/signin` | Login |
+| GET | `/api/auth/me` | Get current user |
 
-- 🍔 Food
-- 🚗 Transport
-- 🎬 Entertainment
-- 📄 Bills
-- 🛍️ Shopping
-- 💊 Health
-- 📚 Education
-- 📦 Other
+### Expenses
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/expenses/` | Create expense |
+| GET | `/api/expenses/` | List expenses (with filters) |
+| GET | `/api/expenses/{id}` | Get expense |
+| PATCH | `/api/expenses/{id}` | Update expense |
+| DELETE | `/api/expenses/{id}` | Delete expense |
+
+### Budgets
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/budgets/` | Create/update budget |
+| GET | `/api/budgets/` | List budgets |
+| GET | `/api/budgets/{id}` | Get budget |
+| PATCH | `/api/budgets/{id}` | Update budget |
+| DELETE | `/api/budgets/{id}` | Delete budget |
+
+### Dashboard
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/dashboard/` | Get dashboard summary |
+| GET | `/api/dashboard/alerts` | Get budget alerts |
+
+### 🤖 AI Analytics
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/ai/predict` | Predict next month's spending |
+| GET | `/api/ai/anomalies` | Detect spending anomalies |
+| GET | `/api/ai/insights` | Get smart spending insights |
 
 ## 👩‍💻 Author
 
-**Shreya Srivastava**
+**Shreya Srivastava** — [GitHub](https://github.com/ishreyasrivastava)
 
 ---
 
-Made with ❤️ for better financial management
+*Built with discipline. Powered by data. 💰🤖*

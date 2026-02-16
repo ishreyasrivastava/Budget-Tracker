@@ -15,7 +15,7 @@ from contextlib import asynccontextmanager
 import logging
 
 from .config import get_settings
-from .routes import auth, expenses, budgets, dashboard
+from .routes import auth, expenses, budgets, dashboard, ai
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -49,6 +49,8 @@ app = FastAPI(
     - 💰 Set and monitor monthly budgets
     - 🚨 Get alerts when approaching budget limits
     - 📈 View spending analytics and trends
+    - 🤖 AI-powered expense predictions and anomaly detection
+    - 💡 Smart spending insights and recommendations
     
     ### Authentication
     All endpoints (except `/health`) require authentication via Supabase JWT.
@@ -93,6 +95,7 @@ app.include_router(auth.router, prefix="/api")
 app.include_router(expenses.router, prefix="/api")
 app.include_router(budgets.router, prefix="/api")
 app.include_router(dashboard.router, prefix="/api")
+app.include_router(ai.router, prefix="/api")
 
 
 # Health check endpoint (public)
