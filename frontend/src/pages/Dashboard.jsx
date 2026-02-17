@@ -41,10 +41,18 @@ export default function Dashboard() {
   const [alerts, setAlerts] = useState([])
   const [loading, setLoading] = useState(true)
   const [month, setMonth] = useState(getCurrentMonth())
+  const [aiPrediction, setAiPrediction] = useState(null)
+  const [aiAnomalies, setAiAnomalies] = useState(null)
 
   useEffect(() => {
     fetchDashboard()
   }, [month])
+
+  useEffect(() => {
+    // Fetch AI data independently
+    api.getAIPredictions().then(setAiPrediction).catch(() => {})
+    api.getAIAnomalies().then(setAiAnomalies).catch(() => {})
+  }, [])
 
   const fetchDashboard = async () => {
     setLoading(true)
@@ -61,6 +69,11 @@ export default function Dashboard() {
       setLoading(false)
     }
   }
+
+  // AI summary helpers
+  const totalPredicted = (aiPrediction?.predictions || aiPrediction?.categories || [])
+    .reduce((s, p) => s + (p.predicted_amount || p.amount || 0), 0)
+  const anomalyCount = (aiAnomalies?.anomalies || []).length
 
   const changeMonth = (delta) => {
     const [year, mon] = month.split('-').map(Number)
@@ -140,6 +153,32 @@ export default function Dashboard() {
           ))}
         </div>
       )}
+
+      {/* AI Widgets */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <Link to="/insights" className="glass-card p-5 flex items-center gap-4 hover:border-primary-500/30 transition-all">
+          <div className="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center">
+            <TrendingUp className="w-6 h-6 text-purple-400" />
+          </div>
+          <div>
+            <p className="text-dark-500 text-sm">Next Month Forecast</p>
+            <p className="text-xl font-bold text-dark-100">
+              {totalPredicted > 0 ? formatCurrency(totalPredicted) : '—'}
+            </p>
+          </div>
+        </Link>
+        <Link to="/insights" className="glass-card p-5 flex items-center gap-4 hover:border-orange-500/30 transition-all">
+          <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${anomalyCount > 0 ? 'bg-orange-500/20' : 'bg-green-500/20'}`}>
+            <AlertTriangle className={`w-6 h-6 ${anomalyCount > 0 ? 'text-orange-400' : 'text-green-400'}`} />
+          </div>
+          <div>
+            <p className="text-dark-500 text-sm">Unusual Expenses</p>
+            <p className="text-xl font-bold text-dark-100">
+              {anomalyCount > 0 ? `${anomalyCount} detected` : 'None detected'}
+            </p>
+          </div>
+        </Link>
+      </div>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

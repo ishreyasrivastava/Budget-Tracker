@@ -19,7 +19,8 @@ import {
   Trash2, 
   X,
   Loader2,
-  Calendar
+  Calendar,
+  Download
 } from 'lucide-react'
 import toast from 'react-hot-toast'
 
@@ -132,6 +133,21 @@ export default function Expenses() {
     }
   }
 
+  const exportCSV = () => {
+    const header = 'Date,Description,Category,Amount'
+    const rows = expenses.map(e =>
+      `${e.date},"${(e.description || '').replace(/"/g, '""')}",${e.category},${e.amount}`
+    )
+    const csv = [header, ...rows].join('\n')
+    const blob = new Blob([csv], { type: 'text/csv' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `expenses-${filters.month || 'all'}.csv`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
   const totalAmount = expenses.reduce((sum, e) => sum + e.amount, 0)
 
   return (
@@ -142,13 +158,22 @@ export default function Expenses() {
           <h1 className="text-2xl lg:text-3xl font-bold text-dark-100">Expenses</h1>
           <p className="text-dark-500 mt-1">Track and manage your spending</p>
         </div>
-        <button
-          onClick={() => openModal()}
-          className="btn-primary flex items-center gap-2"
-        >
-          <Plus className="w-5 h-5" />
-          Add Expense
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={exportCSV}
+            className="btn-secondary flex items-center gap-2"
+          >
+            <Download className="w-5 h-5" />
+            Export CSV
+          </button>
+          <button
+            onClick={() => openModal()}
+            className="btn-primary flex items-center gap-2"
+          >
+            <Plus className="w-5 h-5" />
+            Add Expense
+          </button>
+        </div>
       </div>
 
       {/* Filters */}

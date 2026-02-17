@@ -10,7 +10,8 @@ import {
   PiggyBank, 
   LogOut,
   Menu,
-  X
+  X,
+  Brain
 } from 'lucide-react'
 import { useState } from 'react'
 
@@ -18,6 +19,7 @@ const navItems = [
   { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { path: '/expenses', label: 'Expenses', icon: Receipt },
   { path: '/budgets', label: 'Budgets', icon: PiggyBank },
+  { path: '/insights', label: 'AI Insights', icon: Brain },
 ]
 
 export default function Layout({ children }) {

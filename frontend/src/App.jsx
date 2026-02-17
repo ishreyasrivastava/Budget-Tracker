@@ -11,6 +11,8 @@ import Signup from './pages/Signup'
 import Dashboard from './pages/Dashboard'
 import Expenses from './pages/Expenses'
 import Budgets from './pages/Budgets'
+import Home from './pages/Home'
+import Insights from './pages/Insights'
 
 // Protected route wrapper
 function ProtectedRoute({ children }) {
@@ -54,6 +56,7 @@ function AppRoutes() {
   return (
     <Routes>
       {/* Public routes */}
+      <Route path="/" element={<Home />} />
       <Route path="/login" element={
         <PublicRoute>
           <Login />
@@ -81,10 +84,14 @@ function AppRoutes() {
           <Budgets />
         </ProtectedRoute>
       } />
+      <Route path="/insights" element={
+        <ProtectedRoute>
+          <Insights />
+        </ProtectedRoute>
+      } />
       
       {/* Default redirect */}
-      <Route path="/" element={<Navigate to="/dashboard" replace />} />
-      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
 }

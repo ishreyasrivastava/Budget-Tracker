@@ -141,6 +141,19 @@ class ApiClient {
   async getAlerts() {
     return this.request('/dashboard/alerts')
   }
+
+  // AI endpoints
+  async getAIPredictions() {
+    return this.request('/ai/predictions')
+  }
+
+  async getAIAnomalies() {
+    return this.request('/ai/anomalies')
+  }
+
+  async getAIInsights() {
+    return this.request('/ai/insights')
+  }
 }
 
 export const api = new ApiClient()
