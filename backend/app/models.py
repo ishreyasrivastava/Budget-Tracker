@@ -5,7 +5,7 @@ These define the data structures used throughout the API.
 
 from pydantic import BaseModel, Field, field_validator
 from typing import Optional, List
-from datetime import datetime, date
+from datetime import datetime, date as date_type
 from enum import Enum
 
 
@@ -67,7 +67,7 @@ class ExpenseCreate(BaseModel):
     amount: float = Field(..., gt=0, description="Expense amount (must be positive)")
     category: ExpenseCategory = Field(..., description="Expense category")
     description: Optional[str] = Field(None, max_length=500)
-    date: date = Field(..., description="Date of the expense")
+    date: date_type = Field(..., description="Date of the expense")
     
     @field_validator('amount')
     @classmethod
@@ -81,7 +81,7 @@ class ExpenseUpdate(BaseModel):
     amount: Optional[float] = Field(None, gt=0)
     category: Optional[ExpenseCategory] = None
     description: Optional[str] = Field(None, max_length=500)
-    date: Optional[date] = None
+    date: Optional[date_type] = None
     
     @field_validator('amount')
     @classmethod
