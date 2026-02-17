@@ -29,7 +29,7 @@ export default function Login() {
       toast.success('Welcome back!')
       navigate('/dashboard')
     } catch (error) {
-      toast.error(error.message || 'Failed to sign in')
+      toast.error(error.message || 'Failed to login')
     } finally {
       setLoading(false)
     }
@@ -94,10 +94,10 @@ export default function Login() {
               {loading ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  Signing in...
+                  Logging in...
                 </>
               ) : (
-                'Sign In'
+                'Login'
               )}
             </button>
           </form>

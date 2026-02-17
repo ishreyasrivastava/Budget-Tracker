@@ -64,7 +64,8 @@ export default function Dashboard() {
       setData(dashboardData)
       setAlerts(alertsData.alerts || [])
     } catch (error) {
-      toast.error('Failed to load dashboard')
+      console.error('Dashboard error:', error)
+      setData({ total_spent: 0, budget_total: 0, categories: [], recent_expenses: [], daily_spending: [] })
     } finally {
       setLoading(false)
     }
