@@ -55,7 +55,7 @@ export default function Signup() {
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-700 mb-4">
             <PiggyBank className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-3xl font-bold gradient-text">BudgetPro</h1>
+          <h1 className="text-3xl font-bold text-dark-100">BudgetWise</h1>
           <p className="text-dark-500 mt-2">Start tracking your finances today</p>
         </div>
 

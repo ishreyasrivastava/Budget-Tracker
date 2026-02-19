@@ -42,7 +42,7 @@ export default function Layout({ children }) {
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center">
               <PiggyBank className="w-6 h-6 text-white" />
             </div>
-            <span className="text-xl font-bold gradient-text">BudgetPro</span>
+            <span className="text-xl font-bold text-dark-100">BudgetWise</span>
           </Link>
         </div>
 
@@ -96,7 +96,7 @@ export default function Layout({ children }) {
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center">
               <PiggyBank className="w-5 h-5 text-white" />
             </div>
-            <span className="text-lg font-bold gradient-text">BudgetPro</span>
+            <span className="text-lg font-bold text-dark-100">BudgetWise</span>
           </Link>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
